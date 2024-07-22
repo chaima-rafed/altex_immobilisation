@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_asset_view1" model="ir.ui.view">
+        <field name="name">asset.inventory.verify1</field>
+        <field name="model">asset.inventory.verify1</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="employee_inv_id"/>
+                <field name="company_id"/>
+                <field name="departement_id"/>
+                <field name="desktop_id"/>
+                <field name="get_inventory_verify_line"/>
+                <field name="date_verification"/>
+                <field name="date_debut_inv"/>
+                <field name="date_fin_inv"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_account_asset_inventory_verify_form1" model="ir.ui.view">
+        <field name="name">asset.inventory.verify1</field>
+        <field name="model">asset.inventory.verify1</field>
+        <field name="arch" type="xml">
+            <form string="Immobilisation">
+                <sheet>
+                    <group>
+                        <group string="CHOISIR L'INVENTAIRE">
+                            <field name="badge" invisible="1"/>
+                            <field name="inv_lines_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                        </group>
+                    </group>
+                </sheet>
+
+                <sheet invisible="badge in ['red']">
+                    <sheet>
+                        <group>
+                            <group string="Choisir La Date Debut et Fin Comptage Inventire">
+                                <field name="date_debut_inv"/>
+                                <field name="date_fin_inv"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <group>
+                        <group string="IDENTIFICATION DES LIEUX">
+                            <field name="scan_bat" placeholder="Scanner le Code BAT"/>
+                            <field name="scan_bur" placeholder="Scanner le Code Bur"/>
+                        </group>
+                        <group string="">
+                            <field name="domain_departement_id" invisible="1"/>
+                            <field name="domain_desktop_id" invisible="1"/>
+                            <field name="company_id" />
+                            <field name="departement_id"/>  <!-- domain="domain_departement_id" --> <!--  domain="domain_departement_id"  domain="domain_desktop_id"-->
+                            <field name="desktop_id"  options="{'no_create': False}"/> <!-- domain="domain_desktop_id" -->
+
+                        </group>
+                    </group>
+                    <group string="IDENTIFICATION DES IMMOS">
+                        <field name="code_bare" string="CODE BARE" placeholder="Scanner le Code BUR"/>
+                    </group>
+
+                    <notebook>
+                        <page string="Immobilisation exist dans ce bureaux">
+                            <field name="get_inventory_verify_line">
+                                <tree editable="bottom"
+                                      decoration-success="status == 'exist' "
+                                      decoration-danger="status == 'not_exist' "
+                                      decoration-warning="status == 'added' "
+                                      decoration-primary="status == 'a_compter' "
+                                >
+                                    <field name="asset_id" string="DESIGNATION"/>
+                                    <field name="marque" string="Marque"/>
+                                    <field name="genre" string="Genre"/>
+                                    <field name="code_bare"/>
+                                    <field name="old_barcode_image" widget="image" class="oe_avatar"/>
+                                    <button name="print_ancian_code_bare" type="object" string="Print Ancian Code Bare"
+                                            class="btn-primary"/>
+                                    <field name="code_bare_nv"/>
+                                    <button name="generate_code_bare" type="object" string="Generate Code Bare"
+                                            class="btn-primary"/>
+                                    <button name="print_code_bare" type="object" string="Print Code Bare"
+                                            class="btn-secondary" onclick="printPage()"/>
+                                    <field name="barcode_image" widget="image" class="oe_avatar"/>
+                                    <field name="employee_id" string="Employee"/>
+                                    <field name="status" string="Status"/>
+                                    <!-- <button name="status_exist" string="EXISTE" type="object" class="btn btn-success"  />
+                                     <button name="status_notExist" string="EXISTE PAS" type="object"
+                                             class="bt btn-danger"/>  -->
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action to print the new barcode -->
+    <record id="barcode_report_action" model="ir.actions.report">
+        <field name="name">Barcode Report</field>
+        <field name="model">asset.inventory.verify.line1</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">altex_imobilisation.barcode_report_template</field>
+        <field name="report_file">altex_imobilisation.barcode_report_template</field>
+         <field name="print_report_name">"Barcode Ticket"</field>
+        <field name="paperformat_id" ref="altex_imobilisation.custom_paperformat_ticket"/>
+    </record>
+
+    <!-- Action to print an old barcode -->
+    <record id="old_barcode_report_action" model="ir.actions.report">
+        <field name="name">Old Barcode Report</field>
+        <field name="model">asset.inventory.verify.line1</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">altex_imobilisation.old_barcode_report_template</field>
+        <field name="report_file">altex_imobilisation.old_barcode_report_template</field>
+         <field name="print_report_name">"Ancian CODEBARE"</field>
+        <field name="paperformat_id" ref="altex_imobilisation.custom_paperformat_ticket"/>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="action_account_asset_inventory_verify1">
+        <field name="name">Comptage d'inventaire Du Premier Equipe</field>
+        <field name="res_model">asset.inventory.verify1</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_asset_view1"/>
+        <field name="context">{'skip_onchange': False}</field>
+    </record>
+
+
+    <!-- Comptage Immos  -->
+    <menuitem id="stock_verify_menu_item_assets_comptage"
+              name="DEMARAGE DU COMPTAGE IMMOS"
+              parent="inventaire_immo_id"
+              sequence="3"/>
+
+    <!-- Verify Stock Menu Item -->
+    <menuitem id="stock_verify_menu_item_assets1"
+              name="Démarer le comptage des Immos Equipe 01"
+              parent="stock_verify_menu_item_assets_comptage"
+              action="action_account_asset_inventory_verify1"
+              sequence="1"/>
+
+    <!-- This to call the calculate method of differences and display it -->
+    <!--  <record model="ir.actions.act_window" id="action_compute_display_all_differences">
+          <field name="name">Compute AND Display All Differences</field>
+          <field name="res_model">asset.inventory.verify1</field>
+          <field name="view_mode">form</field>
+          <field name="view_id" ref="om_account_asset.view_account_asset_inventory_verify_form1"/>
+          <field name="context">{'compute_and_display_differences': True}</field>
+      </record>   -->
+
+
+    <!-- <menuitem id="menu_compute_display_all_differences"
+              name="Compute AND Display All Differences"
+              parent="asset_inventory_menu_item_assets"
+              action="action_compute_display_all_differences"
+              sequence="5"/>  -->
+
+
+</odoo>

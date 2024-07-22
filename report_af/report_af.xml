@@ -1,0 +1,14 @@
+<odoo>
+<record id="report_attestation" model="ir.actions.report">
+        <field name="name">Report AF</field>
+        <field name="model">account.asset.asset</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">altex_imobilisation.report_attestation_template</field>
+        <field name="report_file">altex_imobilisation.report_attestation_template</field>
+        <field name="print_report_name">'Attestation - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_account_asset_asset"/>
+        <field name="binding_type" >report</field>
+
+    </record>
+
+</odoo>

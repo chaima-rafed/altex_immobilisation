@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="asset_inventaire_tree" model="ir.ui.view">
+        <field name="name">asset.inventaire.tree</field>
+        <field name="model">immo.inv</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="res_informatique"/>
+                <field name="date_depart"/>
+                <field name="date_cloture"/>
+                <field name="date_debut_comptage"/>
+                <field name="date_fin_comptage"/>
+                <field name="date_debut_adjustement"/>
+                <field name="date_fin_adjustement"/>
+                <field name="immo_inv_id"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="asset_inventaire_form" model="ir.ui.view">
+        <field name="name">asset.inventaire.form</field>
+        <field name="model">immo.inv</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button string="Comparatif de l'inventaire de la première équipe (01)" type="object"
+                                name="get_immo_count_data1"
+                                class="oe_stat_button" icon="fa-exchange" widget="statinfo"/>
+
+                        <button string="Comparatif de l'inventaire de la deuxième équipe (02)" type="object"
+                                name="get_immo_count_data2"
+                                class="oe_stat_button" icon="fa-exchange" widget="statinfo"/>
+                    </div>
+                    <group string="Inventaire d'immobilisation">
+                        <group>
+                            <field name="name"/>
+                        </group>
+
+                        <group>
+                            <field name="res_informatique"/>
+                        </group>
+                    </group>
+
+                    <group>
+                        <group string="DATE INVENTAIRE">
+                            <group class="custom_frame">
+                                <field name="date_depart"/>
+                                <field name="date_cloture"/>
+                            </group>
+                        </group>
+
+                        <group string="DATE COMPTAGE">
+                            <group>
+                                <field name="date_debut_comptage"/>
+                                <field name="date_fin_comptage"/>
+                            </group>
+                        </group>
+                    </group>
+
+                    <group>
+                        <group string="DATE ADJUSTEMENT">
+                            <group>
+                                <field name="date_debut_adjustement"/>
+                                <field name="date_fin_adjustement"/>
+                            </group>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Personne a Affecter">
+                            <field name="immo_inv_id" widget="one2many_list">
+                                <tree editable="bottom">
+                                    <control>
+                                        <create string="Affecter un employée"/>
+                                    </control>
+                                    <field name="employee_id"/>
+                                    <field name="company_id"/>
+                                    <field name="departement_id" widget="many2many_tags"/>
+                                    <field name="desktop_id" widget="many2many_tags"/>
+                                    <field name="equipe"/>
+                                    <field name="taux_progres"/>
+                                    <field name="state" widget='badge'
+                                           decoration-success="state == 'fini'"
+                                           decoration-warning="state == 'en_cours'"
+                                    />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_immobilisation_inventaire">
+        <field name="name">Inventaire d'immobilisation</field>
+        <field name="res_model">immo.inv</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="asset_inventaire_tree"/>
+    </record>
+
+    <menuitem id="inventaire_immo_id"
+              name="INVENTAIRE"
+              parent="configuration_menu_id"
+              sequence="3"/>
+
+
+    <!-- Menu Item -->
+    <menuitem id="menu_item_inventaire_immobilisation"
+              name="Créer Un Nouveau Inventaire Immos"
+              parent="inventaire_immo_id"
+              action="action_immobilisation_inventaire"
+              sequence="1"/>
+
+</odoo>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Update Form view (Add, Update And Replace) Fields departement -->
+    <record id="update_form_view_hr_department" model="ir.ui.view">
+        <field name="name">form_view_hr_department</field>
+        <field name="model">hr.department</field>
+        <field name="inherit_id" ref="hr.view_department_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Add code_bat field after name type="action" name="805"
+            <xpath expr="//div[@class='oe_button_box']" position="inside">
+
+                <!- <field string="Bureaux" name="total_bureaux" widget="statinfo"/>
+                <button type="action" name="%(hr.hr_work_location_action)d">
+                    <field string="Bureaux" name="total_bureaux" widget="statinfo"/>
+                </button>
+
+            </xpath>  -->
+
+            <!-- Add code_bat field after name -->
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="code_bat" string="CODE BAT" placeholder="CODE BAT"/>
+            </xpath>
+
+        </field>
+    </record>
+
+
+    <!-- Update View view (Add, Update And Replace) Fields hr_departement -->
+    <record id="update_view_view_hr_departement" model="ir.ui.view">
+        <field name="name">id_view_hr_department</field>
+        <field name="model">hr.department</field>
+        <field name="inherit_id" ref="hr.view_department_tree"/>
+        <field name="arch" type="xml">
+            <!-- Add code_site field after name -->
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="code_bat" string="CODE BAT"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <!-- Update Kanban view (Add, Update And Replace) Fields hr_departement -->
+    <record id="update_kanban_view_hr_departement" model="ir.ui.view">
+        <field name="name">hr.department.kanban</field>
+        <field name="model">hr.department</field>
+        <field name="inherit_id" ref="hr.hr_department_view_kanban"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//kanban/field[@name='total_employee']" position="inside">
+                <field name="code_bat"/>
+                <field name="total_bureaux"/>
+            </xpath>
+
+            <xpath expr="//t/div/div/div/div[@class='o_secondary']" position="after">
+                <div class="o_secondary">
+                    <small>
+                        <field name="code_bat"/>
+                    </small>
+                </div>
+
+            </xpath>
+
+            <xpath expr="//kanban/templates/t/div/div/div/div[@class='col-6 o_kanban_primary_left']" position="inside">
+                <button class="btn btn-info" type="action"
+                        name="%(hr.hr_work_location_action)d"> <!-- name="805" type="action" -->
+                    <t t-out="record.total_bureaux.raw_value"/>
+                    Bureaux
+                </button>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

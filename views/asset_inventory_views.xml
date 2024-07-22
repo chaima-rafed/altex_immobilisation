@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="custom_view_account_asset_inventory_tree" model="ir.ui.view">
+        <field name="name">Inventaire des immobilisations Actuel</field>
+        <field name="model">account.asset.asset</field>
+        <field name="arch" type="xml">
+            <tree string="Immobilisation Personnalisés"
+                  decoration-success="(state == 'open'), (etat == 'verte')"
+                  decoration-info="(state == 'draft')"
+                  decoration-muted="(state == 'close')"
+                  decoration-warning="(state == 'move_to_sell'), (etat == 'orange')"
+                  decoration-danger="(etat == 'rouge')"
+            >
+                <field name="code"/>
+                <field name="code_inv"/>
+                <field name="compte_g"/>
+                <field name="marque"/>
+                <field name="genre"/>
+                <field name="num_serie"/>
+                <field name="code_bare"/>
+                <field name="num_garante"/>
+                <field name="category_id" string="Catégorie d'immobilisation"/>
+                <field name="categuorie_article"/>
+                <field name="date"/>
+                <field name="partner_id" string="Fournisseur"/>
+                <field name="value"/>
+                <field name="value_residual" widget="monetary"/>
+                <field name="currency_id" groups="base.group_multi_currency"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="qte"/>
+                <field name="employee_id" string="Employé"/>
+                <field name="company_name" string="CODE SITE"/>
+                <field name="departement_id" string="CODE BAT"/>
+                <field name="desktop_id" string="CODE BAT"/>
+                <field name="etat"
+                       decoration-success="(etat == 'verte')"
+                       decoration-warning="etat == 'orange'"
+                       decoration-danger="(etat == 'rouge')"
+                       widget="badge"/>
+                <field name="state"
+                       decoration-success="(state == 'open')"
+                       decoration-warning="state == 'move_to_sell'"
+                       decoration-muted="(state == 'close')"
+                       decoration-info="(state == 'draft')"
+                       widget="badge"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Custom Action -->
+    <record id="action_custaltex_imobilisation_inventory_tree" model="ir.actions.act_window">
+        <field name="name">Inventaire des immobilisations</field>
+        <field name="res_model">account.asset.asset</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="altex_imobilisation.custom_view_account_asset_inventory_tree"/>
+        <field name="domain">[('state', '=', 'open')]</field>
+        <field name="context">{'default_state': 'open'}</field>
+    </record>
+
+    <!-- Custom Menu Item -->
+    <menuitem id="asset_inventory_menu_item_assets"
+              name="Inventaire des immobilisations"
+              parent="id_menu_immobilisation"
+              sequence="6"/>
+
+    <!--
+       <record id="group_hr_payroll_user" model="res.groups">
+           <field name="name">Officer</field>
+           <field name="category_id" ref="base.module_category_payroll_localization"/>
+           <field name="implied_ids"
+                  eval="[(4, ref('hr.group_hr_user')), (4, ref('hr_contract.group_hr_contract_manager'))]"/>
+       </record>
+
+       -->
+</odoo>

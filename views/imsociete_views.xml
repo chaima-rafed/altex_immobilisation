@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Update Form view (Add, Update And Replace) Fields res_company -->
+    <record id="update_form_view_res_company" model="ir.ui.view">
+        <field name="name">form_view_res_company</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Add code_site field before partner_id -->
+            <xpath expr="//field[@name='partner_id']" position="before">
+                <field name="code_site" string="CODE SITE" plcaeholder="CODE SITE"/>
+            </xpath>
+
+        </field>
+    </record>
+
+     <!-- Update View view (Add, Update And Replace) Fields res_company -->
+    <record id="update_view_view_res_company" model="ir.ui.view">
+        <field name="name">id_view_res_company</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_tree"/>
+        <field name="arch" type="xml">
+            <!-- Add code_site field after company name -->
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="code_site"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

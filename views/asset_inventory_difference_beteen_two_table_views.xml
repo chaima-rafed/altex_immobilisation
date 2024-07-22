@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_asset_inventory_difference_between_two_table_tree" model="ir.ui.view">
+        <field name="name">asset.inventory.difference.2.table.tree1</field>
+        <field name="model">asset.inventory.difference.2.table</field>
+        <field name="arch" type="xml">
+            <tree string="Différence D'Inventaire Des Immobilisations Entre Les Deux Tables" editable="bottom" create="0">
+                <header>
+                    <button name="compute_differences" string="Identifier Les Ecarts Du Deux Table" type="object"
+                            class="btn-primary ms-1" display="always"/>
+                </header>
+                <!-- <field name="asset_id" string="Immobilisation" readonly="1"/> -->
+                <field name="code" string="CODE"/>
+                <field name="code_inv" string="CODE INV"/>
+                <field name="compte_g" string="COMPTE G"/>
+                <field name="code_bare" string="CODE BARE"/>
+                <field name="company_id" string="SITE" readonly="1"/>
+                <field name="departement_id" string="BAT"/>
+                <field name="desktop_id" string="BUR"/>
+                <field name="employee_id" string="Employé"/>
+                <field name="desc" string="DESC"/>
+                <field name="num_garante"/>
+                <field name="marque"/>
+                <field name="genre"/>
+                <field name="num_serie"/>
+                <field name="categuorie_article"/>
+                <field name="inventaire"/>
+                <field name="etat"/>
+                <field name="state"/>
+                <field name="state_life"/>
+                <field name="status"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="action_asset_inventory_two_table_difference">
+        <field name="name">Différence d'inventaire des immobilisations Entre Les Deux Tables</field>
+        <field name="res_model">asset.inventory.difference.2.table</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_asset_inventory_difference_between_two_table_tree"/>
+        <!-- <field name="view_ids" eval="[(5, 0, 0),
+              (0, 0, {'view_mode': 'tree', 'view_id': ref('view_asset_inventory_difference_tree1')}),
+              (0, 0, {'view_mode': 'form', 'view_id': ref('base_accounting_kit.view_account_asset_asset_form')})]"
+        /> -->
+
+    </record>
+
+    <!-- -->
+    <menuitem id="menu_asset_inventory_difference_two_table_principale"
+              name="Analyser les écarts d'inventaire Entre Les Deux Table"
+              parent="inventaire_immo_id"
+              sequence="6"/>
+
+    <!-- Menu Item -->
+    <menuitem id="menu_asset_inventory_difference_2_table"
+              name="Analyser Les Ecarts (Final)"
+              parent="menu_asset_inventory_difference_two_table_principale"
+              action="action_asset_inventory_two_table_difference"
+              sequence="1"/>
+
+    <!--  <record model="ir.actions.server" id="server_compute_and_display_differences">
+         <field name="name">Compute AND Display All Differences</field>
+         <field name="model_id" ref="model_asset_inventory_verify"/>
+         <field name="state">code</field>
+         <field name="code">env['asset.inventory.verify'].compute_and_display_differences();</field>
+     </record>
+
+      <menuitem id="menu_compute_display_all_differences"
+                name="Compute AND Display All Differences"
+                parent="asset_inventory_menu_item_assets"
+                action="server_compute_and_display_differences"
+                sequence="5"/> -->
+
+</odoo>

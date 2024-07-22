@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="im_adjustement_inventaire_tree_view1" model="ir.ui.view">
+        <field name="name">Adustement Inventaire 01</field>
+        <field name="model">im.adjustement.inv1</field>
+        <field name="arch" type="xml">
+
+            <tree editable="bottom" create="1" edit="1"
+                  decoration-success="status == 'exist'"
+                  decoration-danger="status == 'not_exist'"
+                  decoration-warning="status == 'added'"
+            > <!-- js_class="inventory_report_list" sample="1" -->
+                <header>
+                    <button name="refresh_database" string="Rafraichir le tableau" type="object"
+                            class="btn-primary ms-1" display="always"/>
+
+                    <button name="compute_and_display_differences" string="Identifier les écarts" type="object"
+                            class="btn-primary ms-1" display="always"/>
+
+                </header>
+                <field name="asset_id"/>
+                <field name="code"/>
+                <field name="code_inv"/>
+                <field name="code_bare"/>
+                <field name="code_bare_nv"/>
+                <field name="compte_g"/>
+                <field name="employee_id"/>
+                <field name="company_name"/>
+                <field name="departement_id"/>
+                <field name="desktop_id"/>
+                <field name="employee_fait_inv_id"/>
+                <field name="inventaire"/>
+                <field name="create_date"/>
+                <field name="status" optional="show" widget="badge"
+                       decoration-success="status == 'exist'"
+                       decoration-danger="status == 'not_exist'"
+                       decoration-warning="status == 'added'"
+                />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_adjustement_inv1">
+        <field name="name">Adjustement d'Inventaire d'immobilisation 01</field>
+        <field name="res_model">im.adjustement.inv1</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="im_adjustement_inventaire_tree_view1"/>
+    </record>
+
+</odoo>

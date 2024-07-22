@@ -1,0 +1,102 @@
+<!-- File: views/asset_move_tosell_views.xml -->
+<odoo>
+    <data>
+        <!-- Custom Menu Item -->
+
+
+        <!-- Tree View: Asset Move To Sell -->
+        <record id="view_asset_move_tosell_tree" model="ir.ui.view">
+            <field name="name">asset.move.tosell.tree</field>
+            <field name="model">asset.move.tosell</field>
+            <field name="arch" type="xml">
+                <tree decoration-success="state  == 'is_sold'" decoration-warning="state == 'draft'">
+                    <field name="asset_id"/>
+                    <field name="asset_code"/>
+                    <field name="asset_compte_g"/>
+                    <field name="asset_code_inv"/>
+                    <field name="asset_marque"/>
+                    <field name="asset_genre"/>
+                    <field name="asset_num_serie"/>
+                    <field name="employee"/>
+                    <field name="value_residual"/>
+                    <field name="salvage_value"/>
+                    <field name="qte"/>
+                    <field name="price_to_sell"/>
+                    <field name="state"
+                           decoration-success="state == 'is_sold'"
+                           decoration-warning="state == 'draft'"
+                           widget="badge"
+                    />
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form View: Asset Move To Sell -->
+        <record id="view_asset_move_tosell_form" model="ir.ui.view">
+            <field name="name">asset.move.tosell.form</field>
+            <field name="model">asset.move.tosell</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="draft,is_sold"/> <!-- options="{'clickable': '1'}" -->
+                        <button string="Vendre cette immobilisation" type="object" name="sell_asset"
+                                class="oe_highlight"
+                                invisible="state == 'is_sold'"
+                        /> <!--  context="{'active_id': id, 'active_model': 'asset.move.tosell'}" attrs="{'invisible': [('is_sold', '=', True)]}" -->
+                    </header>
+
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="asset_id"/>
+                                <field name="asset_compte_g"/>
+                                <field name="asset_code_inv"/>
+                            </group>
+                            <group>
+                                <field name="employee"/>
+                                <field name="asset_marque"/>
+                                <field name="asset_genre"/>
+                                <field name="asset_num_serie"/>
+                            </group>
+                            <group>
+                                <field name="qte"/>
+                                <field name="price_to_sell"/>
+                                <field name="partner_id"/>
+                            </group>
+                            <group>
+                                <field name="value_residual"/>
+                                <field name="salvage_value"/>
+                            </group>
+                        </group>
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+
+        <!-- Action: Asset Move To Sell -->
+        <record id="action_asset_move_tosell" model="ir.actions.act_window">
+            <field name="name">Déplacement d'immobilisation pour vendre</field>
+            <field name="res_model">asset.move.tosell</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="altex_imobilisation.view_asset_move_tosell_tree"/>
+        </record>
+
+        <!-- Menu Item -->
+        <menuitem id="immo_vendu_id"
+                  name="VENTE"
+                  parent="configuration_menu_id"
+                  sequence="1"
+        />
+
+        <!-- Menu Item -->
+        <menuitem id="id_pricipal_socite_menu_item_tes"
+                  name="Immobilisation à Vendu"
+                  action="action_asset_move_tosell"
+                  parent="immo_vendu_id"
+                  sequence="1"
+        />
+
+    </data>
+</odoo>

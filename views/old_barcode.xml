@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="old_barcode_report_template">
+            <t t-call="web.external_layout">
+                <div class="page"
+                     style="width: 80mm; height: 30mm; text-align: center; page-break-after: auto; text-align: center;"> <!-- page-break-after: auto; position: relative-->
+                    <main style="text-align:center;"> <!-- top: 50%; left: 50%;  transform: rotate(90deg); -->
+                        <div t-if="docs.old_barcode_image">
+                            <h1 style="text-align:center">E.N.T.M.V</h1>
+                            <img t-att-src="'data:image/png;base64,%s' % docs.old_barcode_image.decode('utf-8')"
+                                 style="width:150%; max-height:100%; transform: rotate(90deg); transform-origin: center;" />
+                        </div>
+                        <div t-if="not docs.old_barcode_image">
+                            <p>No Old Barcode Image Available</p>
+                        </div>
+                    </main>
+                </div>
+            </t>
+        </template>
+
+
+    </data>
+</odoo>

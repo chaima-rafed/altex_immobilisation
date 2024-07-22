@@ -1,0 +1,19 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_imobilisation_user,access.imobilisation.user,model_account_asset_asset,base.group_user,1,1,1,1
+access_imobilisation_manager,access.imobilisation.manager,model_account_asset_asset,base.group_system,1,1,1,1
+access_asset_move_tosell,access.asset.move.tosell,model_asset_move_tosell,base.group_system,1,1,1,1
+access_asset_move,access.asset.move,model_asset_move,base.group_system,1,1,1,1
+access_asset_inventory_verify1,models.asset_inventory_verify1,model_asset_inventory_verify1,account.group_account_user,1,1,1,1
+access_asset_inventory_verify2,models.asset_inventory_verify2,model_asset_inventory_verify2,account.group_account_user,1,1,1,1
+access_asset_inventory_difference1,models.asset_inventory_difference1,model_asset_inventory_difference1,account.group_account_user,1,1,1,1
+access_asset_inventory_difference2,models.asset_inventory_difference2,model_asset_inventory_difference2,account.group_account_user,1,1,1,1
+access_immo_inv,models.immo_inv,model_immo_inv,account.group_account_user,1,1,1,1
+access_immo_inv_line,models.immo_inv_line,model_immo_inv_line,account.group_account_user,1,1,1,1
+access_asset_inventory_verify_line1,models.asset_inventory_verify_line1,model_asset_inventory_verify_line1,account.group_account_user,1,1,1,1
+access_asset_inventory_verify_line2,models.asset_inventory_verify_line2,model_asset_inventory_verify_line2,account.group_account_user,1,1,1,1
+access_im_adjustement_inv1,models.im_adjustement_inv1,model_im_adjustement_inv1,account.group_account_user,1,1,1,1
+access_im_adjustement_inv2,models.im_adjustement_inv2,model_im_adjustement_inv2,account.group_account_user,1,1,1,1
+access_p_commission,models.p_commission,model_p_commission,account.group_account_user,1,1,1,1
+access_account_asset_asset,Access to Asset/Revenue Recognition model,model_account_asset_asset,base.group_user,1,1,1,1
+access_asset_inventory_difference_2_table,models.asset_inventory_difference_2_table,model_asset_inventory_difference_2_table,base.group_user,1,1,1,1
+access_temp_imobilisation,models.temp_imobilisation,model_temp_imobilisation,base.group_user,1,1,1,1

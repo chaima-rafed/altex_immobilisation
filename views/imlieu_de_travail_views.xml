@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Update Form view (Add, Update And Replace) Fields departement -->
+    <record id="update_form_work_location=" model="ir.ui.view">
+        <field name="name">form_view_work_location</field>
+        <field name="model">hr.work.location</field>
+        <field name="inherit_id" ref="hr.hr_work_location_form_view"/>
+        <field name="arch" type="xml">
+
+            <!-- Add code_niv, code_bur field after name -->
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="code_bur" placeholder="CODE BUR"/>
+                <field name="code_niv" placeholder="CODE NIV"/>
+                <field name="departement_id"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- Update View view (Add, Update And Replace) Fields hr_work_location -->
+    <record id="update_view_view_hr_work_location" model="ir.ui.view">
+        <field name="name">view_work_location</field>
+        <field name="model">hr.work.location</field>
+        <field name="inherit_id" ref="hr.hr_work_location_tree_view"/>
+        <field name="arch" type="xml">
+            <!-- Add code_niv, code_bur field after name -->
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="code_bur"/>
+                <field name="code_niv"/>
+                <field name="departement_id"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- Add search -->
+    <record id="model_id_view_search" model="ir.ui.view">
+        <field name="name">model.id.view.search</field>
+        <field name="model">hr.work.location</field>
+        <field name="arch" type="xml">
+            <search>
+                <filter string="Lieu de trvail" name="filtred_by_name" domain="[('name', '=', 'Home')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Lieu de travail" name="grouped_by_name" context="{'group_by': 'name'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Herite action and add context to fix grouped searh as favorite 'Lieu de travail' -->
+    <record model="ir.actions.act_window" id="hr.hr_work_location_action">
+        <field name="name">Lieux de travail</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.work.location</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="hr.hr_work_location_tree_view"/>
+        <field name="context">{'search_default_grouped_by_name':1, 'search_default_filtred_by_name':0}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Cliquez ici pour créer un nouveau contact Nasreddine.
+            </p>
+            <p>
+
+            </p>
+            <p>
+
+            </p>
+        </field>
+    </record>
+
+</odoo>

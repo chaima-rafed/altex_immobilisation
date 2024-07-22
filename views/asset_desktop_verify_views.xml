@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Form -->
+    <record id="view_verify_desktop_form" model="ir.ui.view">
+        <field name="name">account.asset.asset.form.bureaux</field>
+        <field name="model">asset.inventory.verify</field>
+        <field name="arch" type="xml">
+            <form string="Bureaux">
+                <sheet>
+                    <group>
+                        <field name="departement_id" string="Verify Departement"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record model="ir.actions.act_window" id="action_asset_verify_immo_departement">
+        <field name="name">Liste des Bureaux</field>
+        <field name="res_model">asset.inventory.verify</field>
+        <field name="view_mode">form</field>
+        <!-- <field name="view_id" ref="view_asset_inventory_difference_tree"/> -->
+    </record>
+
+    <!-- create menu item -->
+    <menuitem id="id_verify"
+              name="Verification"
+              parent="id_menu_immobilisation"
+              sequence="8"/>
+
+    <menuitem id="id_verify_departement"
+              name="Immo Verify"
+              parent="id_verify"
+              action="action_asset_verify_immo_departement"
+              sequence="1"/>
+
+</odoo>

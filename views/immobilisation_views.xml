@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Update Form view (Add, Update And Replace) Fields -->
+    <record id="update_form_view_account_asset_asset" model="ir.ui.view">
+        <field name="name">form_view_account_asset_asset</field>
+        <field name="model">account.asset.asset</field>
+        <field name="inherit_id" ref="base_accounting_kit.view_account_asset_asset_form"/>
+        <field name="arch" type="xml">
+
+            <!-- update the state of validate method -->
+            <xpath expr="//form/header/button[@name='validate']" position="after">
+                <field name="file" filename="name" invisible="0"/>
+                <button name="import_data" string="Importer Liste"
+                        type="object" class="oe_highlight" invisible="0"/>
+
+                <button name="complter_generer_codebare" string="Completer codebare"
+                        type="object" class="oe_highlight" invisible="0"/>
+            </xpath>
+            <xpath expr="//form/header/button[@name='validate']" position="replace">
+                <button name="validate" invisible="state in ['open', 'sortie']" string="Confirm" type="object"
+                        class="oe_highlight"/>
+
+                <field name="state_life" invisible="1"/>
+
+                <button name="affect_immo"
+                        invisible="state_life in ['in_use', 'attente_comission', 'wait_sold', 'sold', 'scrapped']"
+                        string="Affecter Immo" type="object"
+                        class="oe_highlight"/>
+                <button name="attente_comission"
+                        invisible="state_life in ['attente_comission', 'en_cours_affecter', 'wait_sold', 'sold', 'scrapped']"
+                        string="Attente Commission" type="object"
+                        class="oe_highlight"/>
+                <!-- <button name="wait_sold"
+                        invisible="state_life in ['en_cours_affecter', 'wait_sold', 'sold', 'scrapped', 'in_use']"
+                        string="Déplacer a vendre" type="object"
+                        class="oe_highlight"/> -->
+                <button name="sold"
+                        invisible="state_life in ['attente_comission', 'sold', 'en_cours_affecter', 'scrapped', 'in_use']"
+                        string="Vendu" type="object"
+                        class="oe_highlight"/>
+                <button name="scrapped"
+                        invisible="state_life in ['en_cours_affecter', 'wait_sold', 'sold', 'scrapped', 'in_use']"
+                        string="Détruit" type="object"
+                        class="oe_highlight"/>
+
+            </xpath>
+
+            <!-- Make state invisible -->
+            <xpath expr="//form/header/field[@name='state']" position="replace">
+                <field name="state" invisible="1"/>
+            </xpath>
+
+            <!-- Add a status move_to_sell, close to state on header field -->
+            <xpath expr="//form/header/field[@name='state']" position="after">
+                <field name="state_life" widget="statusbar"
+                       statusbar_visible="en_cours_affecter,in_use,attente_comission,wait_sold,sold,scrapped"/>
+            </xpath>
+
+
+            <!-- replace 'Sell or Dispose' to 'Passer à la vente d'immobilisation' in the header -->
+            <xpath expr="//form/header/button[@name='set_to_close']" position="replace">
+                <button name="move_to_sell" string="Déplacer a vendre" type="object"
+                        class="oe_highlight"
+                        invisible="state_life in ['en_cours_affecter', 'wait_sold', 'sold', 'scrapped', 'in_use']"
+                />
+            </xpath>
+
+
+            <!-- Replace for name with code
+            <xpath expr="//div[@class='oe_title']/label[@for='name']" position="attributes">
+                <attribute name="for">code</attribute>
+            </xpath>
+
+            <xpath expr="//div[@class='oe_title']/h1/field[@name='name']" position="replace">
+                <field name="code" placeholder="e.g. EACRT5 436" readonly="state != 'draft'"/>
+            </xpath>
+            -->
+
+
+            <!-- Add some specified field befor and after -->
+            <xpath expr="//group/group/field[@name='category_id']" position="before">
+                <field name="code_bare" string="CODE BARE" placeholder="CODE BARE"/>
+                <field name="desc" placeholder="DESCRIPTION"/>
+                <field name="code_inv" string="CODE INV" placeholder="CODE INV"/>
+                <field name="compte_g" string="COMPTE G" placeholder="COMPTE G"/>
+                <field name="marque" placeholder="Marque"/>
+                <field name="genre" placeholder="Genre"/>
+                <field name="num_serie" placeholder="Num Série"/>
+                <field name="categuorie_article" string="Categuorie Article" placeholder="Catéguorie Article"/>
+            </xpath>
+
+            <xpath expr="//group/group/field[@name='category_id']" position="after">
+                <field name="date_amortissement"/>
+            </xpath>
+
+            <!-- Delete the code field -->
+            <xpath expr="//group/group/field[@name='code']" position="replace"/>
+
+            <!-- Delete the etablissement field -->
+            <xpath expr="//group/group/field[@name='company_id']" position="replace"/>
+
+            <xpath expr="//group/group/field[@name='currency_id']" position="before">
+                <field name="etat"/>
+                <field name="num_garante" placeholder="Num Guarantie"/>
+            </xpath>
+            <!-- ********************* -->
+
+            <!-- Add Employee, Company, Departement and Assigned Desktop Asset Location  -->
+            <xpath expr="//page[2]" position="after">
+                <page string="Localisation">
+                    <group>
+                        <field name='employee_id'/>
+                        <field name='company_name' context="{'related_field': 'code_site'}"/>
+                        <field name='departement_id' context="{'related_field': 'code_bat'}"/>
+                        <field name='desktop_id' context="{'related_field': 'code_bur'}"/>
+                    </group>
+                </page>
+            </xpath>
+
+            <xpath expr="//page[3]" position="after">
+                <page string="Commission" invisible="state_life in ['en_cours_affecter', 'in_use']">
+                    <group string="NOTE COMMISSION">
+                        <field name='note_commision'
+                               placeholder="Ecrire ici la décision que vous ete fait, ou tous les remarques nécessaire"/>
+                    </group>
+                    <group string="DATE COMMISSION">
+                        <field name="date_commission"/>
+                    </group>
+                    <field name="commission_id" widget="one2many_list">
+                        <tree editable="bottom">
+                            <control>
+                                <create string="Membre Commission"/>
+                            </control>
+                            <field name="employee_id"/>
+                            <field name="grade"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- Update View view (Add, Update And Replace) Fields -->
+    <record id="update_view_account_asset_asset" model="ir.ui.view">
+        <field name="name">view_account_asset_asset</field>
+        <field name="model">account.asset.asset</field>
+        <field name="inherit_id" ref="base_accounting_kit.view_account_asset_asset_purchase_tree"/>
+        <field name="arch" type="xml">
+            <!--  -->
+            <xpath expr="//tree" position="replace">
+                <tree string="Immobilisations"
+                      decoration-success="state == 'open' or etat == 'verte'"
+                      decoration-info="state == 'draft'"
+                      decoration-muted="state == 'sortie'"
+                      decoration-warning="state_life == 'wait_sold' or etat == 'orange'"
+                      decoration-danger="etat == 'rouge'">
+                    <field name="name"/>
+                    <field name="code_bare"/>
+                    <field name="company_name"/>
+                    <field name="departement_id"/>
+                    <field name="desktop_id"/>
+                    <field name="code_inv"/>
+                    <field name="compte_g"/>
+                    <field name="category_id"/>
+                    <field name="marque"/>
+                    <field name="genre"/>
+                    <field name="qte"/>
+                    <field name="value"/>
+                    <field name="date"/>
+                    <field name="salvage_value"/>
+                    <field name="value_residual" widget="monetary"/>
+                    <field name="etat"
+                           decoration-success="etat == 'verte'"
+                           decoration-warning="etat == 'orange'"
+                           decoration-danger="etat == 'rouge'"
+                           widget="badge"/>
+                    <field name="state_life"
+                           decoration-primary="state_life == 'en_cours_affecter'"
+                           decoration-success="state_life == 'in_use'"
+                           decoration-info="state_life == 'attente_comission'"
+                           widget="badge"/>
+                    <field name="state"
+                           decoration-primary="state == 'draft'"
+                           decoration-success="state == 'open'"
+                           decoration-muted="state == 'sortie'"
+
+                           widget="badge"/>
+                </tree>
+            </xpath>
+
+        </field>
+    </record>
+    <!-- Create a new Menu named 'Immobilisation' -->
+    <menuitem id="id_menu_immobilisation"
+              name="Immobilisations"
+              sequence="100"/>
+    <!-- Change Asset Menu To 'Immobilisation an Moving From Accounting to the new Menu 'Immobilisation'' -->
+    <record model="ir.ui.menu" id="base_accounting_kit.menu_action_account_asset_asset_form">
+        <field name="name">Immobilisation</field>
+        <field name="parent_id" ref="id_menu_immobilisation"/>
+        <field name="action" ref="base_accounting_kit.action_account_asset_asset_form"/>
+        <field name="sequence" eval="1"/>
+    </record>
+
+    <!-- Change Asset Type To 'Type Immobilisation an Moving From Accounting to the new Menu 'Immobilisation''   -->
+    <record model="ir.ui.menu" id="base_accounting_kit.menu_action_account_asset_asset_list_normal_purchase">
+        <field name="name">Type Immobilisation</field>
+        <field name="parent_id" ref="id_menu_immobilisation"/>
+        <field name="action" ref="base_accounting_kit.action_account_asset_asset_list_normal_purchase"/>
+        <field name="sequence" eval="3"/>
+    </record>
+
+
+</odoo>

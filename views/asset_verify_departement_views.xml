@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_asset_inventory_verify_form" model="ir.ui.view">
+        <field name="name">account.asset.asset.form.departement</field>
+        <field name="model">asset.inventory.verify</field>
+        <field name="arch" type="xml">
+            <form string="DEPARTEMENT">
+                <sheet>
+                    <group>
+                        <field name="departement_id" string="Verify Departement" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

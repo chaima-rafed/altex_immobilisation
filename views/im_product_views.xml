@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="update_product_template_id" model="ir.ui.view">
+        <field name="name">form_view_update_product_template</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='options']/span[@class='d-inline-block'][2]" position="after">
+                <span class="d-inline-block">
+                    <field name="is_immo" string="C'est Une Immobilisation ? "/>
+                    <label for="is_immo"/>
+                </span>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

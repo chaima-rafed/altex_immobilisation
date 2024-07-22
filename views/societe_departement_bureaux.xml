@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Create  menu item named Societe -->
+    <menuitem id="id_pricipal_socite_menu_item"
+              name="Etablissement"
+              parent="id_menu_immobilisation"
+              sequence="2"
+    />
+
+    <!-- Create a menu 'Societe' -->
+    <menuitem id="socite_menu_item"
+              name="Etablissement"
+              parent="id_pricipal_socite_menu_item"
+              action="base.action_res_company_form"
+              sequence="1"
+    />
+
+    <!-- Create a menu Département -->
+    <menuitem id="departements_menu_item"
+              name="Départements"
+              parent="id_pricipal_socite_menu_item"
+              action="hr.hr_department_kanban_action"
+              sequence="2"
+    />
+
+    <!-- Create a menu 'Lieu De Travail' -->
+    <menuitem id="lieu_de_travail_menu_item"
+              name="Lieu de travail"
+              parent="id_pricipal_socite_menu_item"
+              action="hr.hr_work_location_action"
+              sequence="3"
+    />
+
+    <!-- Create a Configuration menu -->
+    <menuitem id="configuration_menu_id"
+              name="Configuration"
+              parent="id_menu_immobilisation"
+              sequence="4"
+
+    />
+
+</odoo>

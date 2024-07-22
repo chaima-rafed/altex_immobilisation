@@ -1,0 +1,211 @@
+<odoo>
+        <!-- Define the QWeb template for the report -->
+        <template id="report_attestation_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        <div class="header">
+                            <img src="/employee_attestation_extension/static/src/img/images.png" alt="Logo" class="logo"/>
+                            <h2><strong>E.N.T.M.V</strong></h2>
+                        </div>
+
+                        <div class="title">
+                            <h2><strong>FICHE D'INVENTAIRE THEORIQUE</strong></h2>
+                        </div>
+
+                        <div class="content">
+                            <style>
+                                .header {
+                                    display: flex;
+                                    align-items: center;
+                                    padding: 20px;
+                                }
+
+                                .logo {
+                                    width: 150px;
+                                    height: 150px;
+                                    margin-right: 20px;
+                                }
+
+                                .title {
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                    height: 30vh;
+                                    text-align: center;
+                                    margin-top: 20px;
+                                }
+                         .tables-container {
+                            display: flex;
+                            justify-content: space-between; /* Pour aligner les tables côte à côte */
+                        }
+                                .table-1 {
+                                    width: 50%;
+                                    border-collapse: collapse;
+                                    margin-bottom: 3px; /* Adjust margin as needed */
+                                }
+
+                                .table-1 th, .table-1 td {
+                                    padding: 15px; /* Adjust padding */
+                                    border: 1px solid #ddd;
+                                    text-align: left;
+                                    height: 15px; /* Adjust height */
+                                    font-size: 20px; /* Adjust font size */
+                                }
+
+                                .table-1 th {
+                                    background-color: #d3d3d3; /* Light gray for headers */
+                                    color: #333;               /* Dark text for headers */
+                                    font-weight: bold;
+                                }
+
+                                .table-1 tr:nth-child(even) {
+                                    background-color: #f2f2f2; /* Light gray for even rows */
+                                }
+
+                                .table-2 {
+                                    width: 30%;
+                                    border-collapse: collapse;
+                                    margin-bottom: 30px;
+                                    margin-top: -10px; /* Adjust margin to bring tables closer */
+                                }
+
+                                .table-2 th, .table-2 td {
+                                    padding: 15px; /* Adjust padding */
+                                    border: 1px solid #ddd;
+                                    text-align: left;
+                                    height: 10px; /* Adjust height */
+                                    font-size: 20px; /* Adjust font size */
+                                }
+
+                                .table-2 th {
+                                    background-color: #d3d3d3; /* Light gray for headers */
+                                    color: #333;               /* Dark text for headers */
+                                    font-weight: bold;
+                                }
+
+                                .table-2 tr:nth-child(even) {
+                                    background-color: #f2f2f2; /* Light gray for even rows */
+                                }
+
+                                .table-3 {
+                                    width: 100%;
+                                    border-collapse: collapse;
+                                    margin-bottom: 30px;
+                                }
+
+                                .table-3 th, .table-3 td {
+                                    padding: 15px; /* Adjust padding */
+                                    border: 1px solid #ddd;
+                                    text-align: left;
+                                    height: 15px; /* Adjust height */
+                                    font-size: 20px; /* Adjust font size */
+                                }
+
+                                .table-3 th {
+                                    background-color: #d3d3d3; /* Light gray for headers */
+                                    color: #333;               /* Dark text for headers */
+                                    font-weight: bold;
+                                }
+
+                                .table-3 tr:nth-child(even) {
+                                    background-color: #f2f2f2; /* Light gray for even rows */
+                                }
+
+                                .right-aligned {
+                                    text-align: right;
+                                    margin-top: 25px;
+                                }
+
+                                .signature-section {
+                                    display: flex;
+                                    justify-content: space-between;
+                                    margin-top: 50px;
+                                    margin-right: 600px
+                                }
+                            </style>
+
+
+                            <div class="tables-container">
+                            <!-- Main Table -->
+                            <table class="elegant-table table-1">
+                                <thead>
+                                    <tr class="flex-table">
+                                        <th scope="col">SITE</th>
+                                        <th scope="col">BAT.</th>
+                                        <th scope="col">NIV.</th>
+                                        <th scope="col">ASSISTANT DG</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Data Rows -->
+                                    <tr class="flex-table">
+                                        <td><span t-field="doc.company_name"/></td>
+                                        <td><span t-field="doc.departement_id"/></td>
+                                        <td><span t-field="doc.desktop_id"/></td>
+                                        <td><span t-field="doc.employee_id"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <!-- Secondary Table -->
+                            <table class="elegant-table table-2 " style="margin-top: -10px;"> <!-- Adjust margin to bring tables closer -->
+                                <thead>
+                                    <tr class="flex-table">
+                                        <td scope="col">Structure: DIRECTION GENERALE</td>
+                                    </tr>
+                                </thead>
+                            </table>
+</div>
+                             <br/>
+                            <!-- Detailed Information Table -->
+                            <table class="elegant-table table-3">
+                                <thead>
+                                    <tr class="flex-table">
+                                        <th scope="col">Code</th>
+                                        <th scope="col">Num_inv</th>
+                                        <th scope="col">Référence</th>
+                                        <th scope="col">Désignation</th>
+                                        <th scope="col">Marque</th>
+                                        <th scope="col">Genre</th>
+                                        <th scope="col">N° Série</th>
+                                        <th scope="col">Nbr.élément</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="flex-table">
+                                        <td><span t-field="doc.code"/></td>
+                                        <td><span t-field="doc.code_inv"/></td>
+                                        <td><span t-field="doc.code_bare"/></td>
+                                        <td><span t-field="doc.desc"/></td>
+                                        <td><span t-field="doc.marque"/></td>
+                                        <td><span t-field="doc.genre"/></td>
+                                        <td><span t-field="doc.num_serie"/></td>
+                                        <td><span t-field="doc.qte"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+ <br/>
+                            <p>Fait le <strong><t t-esc="time.strftime('%d/%m/%Y')"/></strong></p>
+
+
+                            <div class="signature-section">
+                                <div>
+                                    <p>Signature :</p>
+                                    <p>Noms et Prénoms</p>
+                                </div>
+                                <div>
+                                    <u><strong><p>Utilisateurs :</p></strong></u>
+                                    <p style="margin-bottom: 5px;">Nom et Prénoms :</p>
+                                    <p>Fonction:</p>
+                                    <p>Signature :</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+</odoo>
